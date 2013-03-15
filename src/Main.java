@@ -4,6 +4,7 @@ public class Main {
         public static void main(String [] args) {  
                 SVM s = new SVM();
                 
+				//adsadadasdasdasd
                 Problem train = new Problem();
                 Problem test = new Problem();
 //              train.loadProblem("G:\\!data\\lshtc\\proba2\\train.txt");
