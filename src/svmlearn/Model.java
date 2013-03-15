@@ -1,11 +1,11 @@
 package svmlearn;
 
 public class Model extends Problem{
-        /** Array of alpha */
+        /** Array od alpha */
         public double [] alpha;
         /** Bias */
         public double b;
-        /** Kernel parameters */
+        /** Kernel parametri */
         KernelParams params; 
         public void saveModel(String filename) {
                 

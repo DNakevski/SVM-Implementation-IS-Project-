@@ -2,19 +2,14 @@ package svmlearn;
 
 public class KernelParams {
         /**
-         * Type of kernel;
-         * = 0 user defined, 
-         * = 1 linear,
-         * = 2 polynomial,
-         * = 3 Gaussian,
-         * = 4 tanh.
+         * Tip na kernel;
          */
         public int kernel = 1;
-        /** Parameter a and sigma */
+        /** Parametar a i sigma */
         protected double a;
-        /** Parameter b */
+        /** Parametar b */
         protected double b;
-        /** Parameter c */
+        /** Parametar c */
         protected double c;
         public KernelParams(int k, double a, double b, double c) {
                 this.kernel = k;

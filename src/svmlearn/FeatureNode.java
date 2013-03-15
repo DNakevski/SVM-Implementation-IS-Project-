@@ -1,10 +1,7 @@
 package svmlearn;
 
 /**
- * Class representing a feature;
- * taken from liblinear
- * @author miafranc
- *
+ * Clasa koja gi pretstavuva karakteristikite;
  */
 public class FeatureNode {
         public final int index;

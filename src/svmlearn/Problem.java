@@ -4,15 +4,13 @@ import java.io.*;
 import java.util.*;
 
 public class Problem {
-        /** The number of training data */
+        /** Broj na elementi na obucuvackoto mnozestvo */
         public int l;
-        /** The number of features (including the bias feature if bias &gt;= 0) */
+        /** broj na karakteristiki */
         public int n;
-        /** Array containing the target values */
+        /** Array koj gi sodrzi celnite vrednosti */
         public int[] y;
-        /** Map of categories to allow various ID's to identify classes with. */
         public CategoryMap<Integer> catmap;
-        /** Array of sparse feature nodes */
         public FeatureNode[][] x;
         public Problem() {
                 l = 0;
@@ -20,8 +18,8 @@ public class Problem {
                 catmap = new CategoryMap<Integer>();
         }
         /**
-         * Loads a binary problem from file, i.e. having 2 classes.
-         * @param filename The filename containing the problem in LibSVM format.
+         * Go loadira binarniot problem od fajl, pr. ima 2 klasi
+         * @param filename imeto na fajlot koj go sodrzi problemot vo LibSVM format.
          */
         public void loadBinaryProblem(String filename) {
                 String row;
@@ -31,14 +29,14 @@ public class Problem {
                         BufferedReader r = new BufferedReader(new FileReader(filename));
                         while ((row = r.readLine()) != null) {
                                 String [] elems = row.split(" ");
-                                //Category:
+                                //Categorija:
                                 Integer cat = Integer.parseInt(elems[0]);
                                 catmap.addCategory(cat);
                                 if (catmap.size() > 2) {
                                         throw new IllegalArgumentException("only 2 classes allowed!");
                                 }
                                 classes.add(catmap.getNewCategoryOf(cat));
-                                //Index/value pairs:
+                                //Index/value parovi:
                                 examples.add(parseRow(elems));
                         }
                         x = new FeatureNode[examples.size()][];
@@ -53,9 +51,7 @@ public class Problem {
                 }
         }
         /**
-         * Parses a row from a LibSVM format file.
-         * @param row The already split row on spaces.
-         * @return The corresponding FeatureNode.
+         * Parsira red od LibSVM format fajl.
          */
         public FeatureNode [] parseRow(String [] row) {
                 FeatureNode [] example = new FeatureNode[row.length-1];

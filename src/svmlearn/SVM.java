@@ -1,18 +1,14 @@
 package svmlearn;
 
 public class SVM {
-        /** Trained/loaded model */
+        /** Istreniran/Loadiran model */
         private Model model;
-        /** Regularization parameter */
         private double C = 1;
-        /** Tolerance */
         private double tol = 10e-3;
-        /** Tolerance */
         private double tol2 = 10e-5;
-        /** Number of times to iterate over the alpha's without changing */
+        /** Broj na iteracii preku alpha bez promeni */
         private int maxpass = 10;
         
-        /*some global variables of the SMO algorithm*/
         private double Ei, Ej;
         private double ai_old, aj_old;
         private double L, H;
@@ -21,18 +17,15 @@ public class SVM {
         public SVM() {
         }
         /**
-         * Training the SVM.
-         * @param train The training set.
+         * Treniranje na SVM
+         * @param istreniraj go trenirackiot set.
          */
         public void svmTrain(Problem train) {
                 KernelParams p = new KernelParams();
                 svmTrain(train, p, 0);
         }
         /**
-         * Training the SVM with specified kernel parameters and algorithm. 
-         * @param train The training set. 
-         * @param p The kernel parameters.
-         * @param alg The chosen algorithm.
+         * Treniranje na SVM so specificirani kernel parametri i algoritam.
          */
         public void svmTrain(Problem train, KernelParams p, int alg) {
                 switch (alg) {
@@ -44,17 +37,13 @@ public class SVM {
                         break;
                 }
         }
-        /**
-         * Probabilistic (random, simple) SMO
-         * @param train The training set.
-         * @param p The kernel parameters.
-         */
+
         private void simpleSMO(Problem train, KernelParams p) {
                 int pass = 0;
                 int alpha_change = 0;
                 int i, j;
                 double eta;
-                //Initialize:
+                //Inicijalizacija:
                 model = new Model();
                 model.alpha = new double [train.l];
                 model.b = 0;
@@ -63,7 +52,7 @@ public class SVM {
                 model.y = train.y;
                 model.l = train.l;
                 model.n = train.n;
-                //Main iteration:
+                //Glavna Iteracija
                 while (pass < maxpass) {
                         if (alpha_change > 0)
                                 System.out.print(".");
@@ -80,17 +69,17 @@ public class SVM {
                                         aj_old = model.alpha[j];
                                         L = computeL(train.y[i], train.y[j]);
                                         H = computeH(train.y[i], train.y[j]);
-                                        if (L == H) //next i
+                                        if (L == H) //sledno i
                                                 continue;
                                         eta = 2*kernel(train.x[i],train.x[j])-kernel(train.x[i],train.x[i])-kernel(train.x[j],train.x[j]);
-                                        if (eta >= 0) //next i
+                                        if (eta >= 0) //sledno i
                                                 continue;
                                         model.alpha[j] = aj_old - (train.y[j]*(Ei-Ej))/eta;
                                         if (model.alpha[j] > H)
                                                 model.alpha[j] = H;
                                         else if (model.alpha[j] < L)
                                                 model.alpha[j] = L;
-                                        if (Math.abs(model.alpha[j]-aj_old) < tol2) //next i
+                                        if (Math.abs(model.alpha[j]-aj_old) < tol2) //sledno i
                                                 continue;
                                         model.alpha[i] = ai_old + train.y[i]*train.y[j]*(aj_old-model.alpha[j]);
                                         computeBias(model.alpha[i], model.alpha[j], train.y[i], train.y[j], 
@@ -107,10 +96,10 @@ public class SVM {
                 System.out.println();
         }
         /**
-         * Computes L.
+         * Go presmetuva L.
          * @param yi
          * @param yj
-         * @return Returns L.
+         * @return vrakja L.
          */
         private double computeL(int yi, int yj) {
                 double L = 0;
@@ -122,10 +111,10 @@ public class SVM {
                 return L;
         }
         /**
-         * Computes H.
+         * Go presmetuva  H.
          * @param yi
          * @param yj
-         * @return Returns H.
+         * @return Vrakja H.
          */
         private double computeH(int yi, int yj) {
                 double H = 0;
@@ -136,16 +125,7 @@ public class SVM {
                 }
                 return H;
         }
-        /**
-         * Computes the bias and stores in model.b.
-         * @param ai
-         * @param aj
-         * @param yi
-         * @param yj
-         * @param kii
-         * @param kjj
-         * @param kij
-         */
+
         private void computeBias(double ai, double aj, int yi, int yj, double kii, double kjj, double kij) {
                 double b1 = model.b - Ei - yi*(ai-ai_old)*kii - yj*(aj-aj_old)*kij;
                 double b2 = model.b - Ej - yi*(ai-ai_old)*kij - yj*(aj-aj_old)*kjj;
@@ -157,17 +137,15 @@ public class SVM {
                         model.b = (b1+b2)/2;            
         }
         /**
-         * The famous SMO algorithm.
-         * @param train The training set.
-         * @param p The kernel parameters.
+         * SMO Algoritam.
+         * @param set za treniranje.
+         * @param p parametri na kernel.
          */
         private void SMO(Problem train, KernelParams p) {
                 
         }
         /**
-         * Test a whole data set
-         * @param test The test data
-         * @return An array of -1 and 1's
+         * Testiraj celosen data set
          */
         public int [] svmTest(Problem test) {
                 if (test == null) 
@@ -179,9 +157,7 @@ public class SVM {
                 return pred;
         }
         /**
-         * Test one example
-         * @param x The test example
-         * @return Class of x: -1 or 1
+         * testiraj eden primer
          */
         public double svmTestOne(FeatureNode [] x) {
                 double f = 0;
@@ -190,13 +166,7 @@ public class SVM {
                 }
                 return f+model.b;
         }
-        /**
-         * Based on the kernel parameters/settings of the model,
-         * calculates the kernel value between two points.
-         * @param x
-         * @param z
-         * @return Kernel value between x and z.
-         */
+
         private double kernel(FeatureNode [] x, FeatureNode [] z) {
                 double ret = 0;
                 switch (model.params.kernel) {

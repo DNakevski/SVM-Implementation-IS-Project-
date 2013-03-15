@@ -2,10 +2,10 @@ package svmlearn;
 
 public class Kernel {
         /**
-         * Calculates the squared Euclidean distance of two vectors
-         * @param x the first point (vector)
-         * @param z the second point (vector)
-         * @return The squared Euclidean distance
+         * Kalkulira kvadratna Evklidova odalecenost na 2 vektora
+         * @param x prva tocka (vector)
+         * @param z vtora tocka (vector)
+         * @return kvadratna Evklidova odalecenost
          */
         public static double euclidean_dist2(FeatureNode [] x, FeatureNode [] z) {
                 double sum=0;
@@ -34,10 +34,10 @@ public class Kernel {
                 return sum;
         }
         /**
-         * Calculates the dot product of two vectors
-         * @param x the first vector
-         * @param z the second vector
-         * @return The dot product of the vectors
+         * kalkulira dot proizvod na 2 vektora
+         * @param x prviot vektor
+         * @param z vtoriot vektor
+         * @return dot proizvod na vektorite
          */
         public static double dot_product(FeatureNode [] x, FeatureNode [] z) {
                 double sum=0;
@@ -58,22 +58,22 @@ public class Kernel {
                 return sum;
         }
         /**
-         * Linear kernel: k(x,z) = <x,z>
-         * @param x first vector
-         * @param z second vector
-         * @return linear kernel value
+         * Linearen kernel: k(x,z) = <x,z>
+         * @param x prv vektor
+         * @param z vtor vektor
+         * @return linearna kernel vrednost
          */
         public static double kLinear(FeatureNode [] x, FeatureNode [] z) {
                 return dot_product(x, z);
         }
         /**
-         * Polynomial kernel: k(x,z) = (a*<x,z>+b)^c
-         * @param x first vector
-         * @param z second vector
-         * @param a coefficient of <x,z>
+         * Polinomijalen kernel: k(x,z) = (a*<x,z>+b)^c
+         * @param x prv vektor
+         * @param z vtor vektor
+         * @param a koeficient na <x,z>
          * @param b bias
          * @param c power
-         * @return polynomial kernel value
+         * @return polinomijalna kernel vrednost
          */
         public static double kPoly(FeatureNode [] x, FeatureNode [] z, double a, double b, double c) {
                 if (c == 1.0)
@@ -81,22 +81,22 @@ public class Kernel {
                 return Math.pow(a*dot_product(x, z)+b, c);
         }
         /**
-         * Gaussian (RBF) kernel: k(x,z) = (-0.5/sigma^2)*||x-z||^2
-         * @param x first vector
-         * @param z second vector
-         * @param sigma parameter (standard deviation)
-         * @return Gaussian kernel value
+         * Gausov (RBF) kernel: k(x,z) = (-0.5/sigma^2)*||x-z||^2
+         * @param x prv vektor
+         * @param z vtor vektor
+         * @param sigma parametar (standardna devijacija)
+         * @return Gausova kernel vrednost
          */
         public static double kGaussian(FeatureNode [] x, FeatureNode [] z, double sigma) {
                 return (-0.5/sigma*sigma)*euclidean_dist2(x, z);
         }
         /**
-         * Tanh (sigmoid) kernel: k(x,z) = tanh(a*<x,z>+b)
-         * @param x first vector
-         * @param z second vector
-         * @param a coefficient of <x,z>
+         * Tanh-ov (sigmoid) kernel: k(x,z) = tanh(a*<x,z>+b)
+         * @param x prv vektor
+         * @param z vtor vektor
+         * @param a koeficient na <x,z>
          * @param b bias
-         * @return tanh kernel value
+         * @return tanh kernel vrednost
          */
         public static double kTanh(FeatureNode [] x, FeatureNode [] z, double a, double b) {
                 return Math.tanh(a*dot_product(x, z)+b);

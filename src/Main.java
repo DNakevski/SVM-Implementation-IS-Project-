@@ -6,15 +6,13 @@ public class Main {
                 
                 Problem train = new Problem();
                 Problem test = new Problem();
-//              train.loadProblem("G:\\!data\\lshtc\\proba2\\train.txt");
-//              test.loadProblem("G:\\!data\\lshtc\\proba2\\test.txt");
+                
+                //loadiraj go mnozestvoto za testiranje i mnozestvoto za treniranje
                 train.loadBinaryProblem("D:\\train.txt");
                 test.loadBinaryProblem("D:\\test.txt");
 
                 System.out.println("Loaded.");
                 System.out.println("Training...");
-//              KernelParams kp = new KernelParams(2,1,1,1);
-//              s.svmTrain(train, kp, 0);
                 s.svmTrain(train);
                 System.out.println("Testing...");
                 int [] pred = s.svmTest(test);
